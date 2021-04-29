@@ -18,7 +18,7 @@ public class CustomExpiredSessionStrategy implements SessionInformationExpiredSt
         HttpServletResponse httpServletResponse = event.getResponse();
         httpServletResponse.setContentType("application/json;charset=utf-8");
         PrintWriter out = httpServletResponse.getWriter();
-        Result result = ResultUtil.success(ResultCode.ERROR, "已在另一台机器登录，被迫下线！");
+        Result result = ResultUtil.success(ResultCode.EXPIRE, "已在另一台机器登录，被迫下线！");
         out.write(JSONObject.toJSONString(result));
         out.flush();
         out.close();

@@ -36,7 +36,7 @@ public class MyUserDetailsService implements UserDetailsService {
             SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role.getName());
             authorities.add(authority);
         }
-        User userDetails = new User(definedUser.getId(), definedUser.getPassword(), authorities);
+        User userDetails = new User(definedUser.getUsername(), definedUser.getPassword(),true,true,true,true, authorities);
         System.out.println("认证成功,用户信息: " + JSONObject.toJSONString(userDetails));
         return userDetails;
     }

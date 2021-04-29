@@ -21,7 +21,7 @@ public class MyAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
         httpServletResponse.setContentType("application/json;charset=utf-8");
-        Result result = ResultUtil.error(ResultCode.ERROR, "游客状态,请先登录！");
+        Result result = ResultUtil.error(ResultCode.EXPIRE, "游客状态,请先登录！");
         httpServletResponse.getWriter().write(JSONObject.toJSONString(result));
     }
 }

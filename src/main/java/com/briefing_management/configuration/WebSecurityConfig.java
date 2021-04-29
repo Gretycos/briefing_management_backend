@@ -78,7 +78,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login","/mylogin","/user/add").permitAll()//定义不需要认证就可以访问
                 //定义需要相应角色就可以访问，角色信息可以自定义，在sys_role表中存储
                 //和在接口中使用注解同样效果hasAuthority 等同于hasRole,校验时角色将被增加 "ROLE_"
-                .antMatchers( "/news").hasRole("admin")
+                .antMatchers( "/user/**").hasRole("admin")
                 .anyRequest().authenticated()//其余所有请求都需要登录认证才能访问
                 .and()
                 //表单登录
@@ -88,8 +88,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //指定自定义form表单请求的路径
                 .loginProcessingUrl("/login").usernameParameter("username").passwordParameter("password")
                 //.defaultSuccessUrl("/success")
-                .successForwardUrl("/login/success")//设置了登入登出的Handler,优先响应Handler
-                .failureUrl("/login/fail")//设置了登入登出的Handler,优先响应Handler
+//                .successForwardUrl("/login/success")//设置了登入登出的Handler,优先响应Handler
+//                .failureUrl("/login/fail")//设置了登入登出的Handler,优先响应Handler
                 //自定义认证成功或者失败的返回json
                 .successHandler(myAuthenticationSuccessHandler)
                 .failureHandler(myAuthenticationFailureHandler)
@@ -107,8 +107,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .rememberMe()// 记住我
                 .rememberMeParameter("rememberMe")
+                .rememberMeCookieName("remember-me")
                 .tokenRepository(persistentTokenRepository()) // 写入token
-                .userDetailsService(myUserDetailsService).tokenValiditySeconds(60 * 1)
+                .tokenValiditySeconds(60 * 10)
+                .userDetailsService(myUserDetailsService)
                 .and()
                 //session设置
                 .sessionManagement()
@@ -147,9 +149,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedHeader("*");
-        configuration.setAllowCredentials(true);//cookie
-        configuration.setAllowedOrigins(Arrays.asList("http://127.0.0.1:8091"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:8091"));
         configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "OPTIONS", "DELETE"));
+        configuration.setAllowCredentials(true);//允许携带cookie
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

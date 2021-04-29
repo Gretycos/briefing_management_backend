@@ -1,5 +1,7 @@
 package com.briefing_management.user.controller;
 
+import com.briefing_management.configuration.util.Result;
+import com.briefing_management.configuration.util.ResultCode;
 import com.briefing_management.role.model.Role;
 import com.briefing_management.role.service.RoleService;
 import com.briefing_management.user.model.User;
@@ -29,4 +31,13 @@ public class UserController {
 //                roleService.getRoleById(1)
 //        ));
 //    }
+
+    @RequestMapping(value = "/get",method = RequestMethod.POST)
+    public Object getUser(@RequestParam Map<String,String> user){
+        Result result = new Result();
+        result.setCode(ResultCode.SUCCESS);
+        result.setMsg("查询成功");
+        result.setData(userService.getUserByUsername(user.get("username")));
+        return result;
+    }
 }

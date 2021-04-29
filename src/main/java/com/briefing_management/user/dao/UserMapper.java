@@ -11,7 +11,7 @@ public interface UserMapper {
             @Result(property = "username", column = "username"),
             @Result(property = "password", column = "password"),
             @Result(property = "role", javaType = Role.class,column = "role",
-                    one = @One(select = "com.role.dao.RoleMapper.getRoleById"))
+                    one = @One(select = "com.briefing_management.role.dao.RoleMapper.getRoleById"))
              })
     @Select("select * from user where username = #{username}")
     User getUserByUsername(@Param("username") String Username);
