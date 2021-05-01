@@ -48,4 +48,78 @@ public class SummaryController {
         }
         return result;
     }
+
+    @RequestMapping(value = "/get/topic/state",method = RequestMethod.POST)
+    public Object getTopicState(){
+        Result result = new Result();
+        try{
+            result.setData(summaryService.getTopicState());
+            result.setCode(ResultCode.SUCCESS);
+            result.setMsg("查询成功");
+        }catch (Exception e){
+            result.setCode(ResultCode.ERROR);
+            result.setMsg("服务器错误");
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/generate/topic",method = RequestMethod.POST)
+    public Object generateTopic(){
+        Result result = new Result();
+        try{
+            int state = summaryService.generateTopic();
+            if (state == 1){
+                result.setCode(ResultCode.SUCCESS);
+                result.setMsg("生成成功");
+            } else if (state == 2){
+                result.setCode(ResultCode.ERROR);
+                result.setMsg("生成主题前应先爬取数据");
+            } else {
+                result.setCode(ResultCode.ERROR);
+                result.setMsg("生成错误");
+            }
+            result.setData(state);
+        }catch (Exception e){
+            result.setCode(ResultCode.ERROR);
+            result.setMsg("服务器错误");
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/get/summary/state",method = RequestMethod.POST)
+    public Object getSummaryState(){
+        Result result = new Result();
+        try{
+            result.setData(summaryService.getSummaryState());
+            result.setCode(ResultCode.SUCCESS);
+            result.setMsg("查询成功");
+        }catch (Exception e){
+            result.setCode(ResultCode.ERROR);
+            result.setMsg("服务器错误");
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/generate/summary",method = RequestMethod.POST)
+    public Object generateSummary(){
+        Result result = new Result();
+        try{
+            int state = summaryService.generateSummary();
+            if (state == 1){
+                result.setCode(ResultCode.SUCCESS);
+                result.setMsg("生成成功");
+            } else if (state == 2){
+                result.setCode(ResultCode.ERROR);
+                result.setMsg("生成摘要前应先生成主题");
+            } else {
+                result.setCode(ResultCode.ERROR);
+                result.setMsg("生成错误");
+            }
+            result.setData(state);
+        }catch (Exception e){
+            result.setCode(ResultCode.ERROR);
+            result.setMsg("服务器错误");
+        }
+        return result;
+    }
 }

@@ -21,4 +21,8 @@ public interface NewsMapper {
 
     @Select("select count(*) from news")
     int getNewsNum();
+
+    @Select("select count(*) from news " +
+            "where publish_time > #{today}")
+    int getNewsState(@Param("today") String today);
 }

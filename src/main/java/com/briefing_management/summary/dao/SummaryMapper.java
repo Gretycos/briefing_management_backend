@@ -21,4 +21,9 @@ public interface SummaryMapper {
 
     @Select("select count(*) from news_summary")
     int getSummaryNum();
+
+    @Select("select count(*) " +
+            "from news_summary " +
+            "where publish_time > #{today}")
+    int getSummaryState(@Param("today") String today);
 }

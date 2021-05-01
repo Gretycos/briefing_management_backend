@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Result<T> {
+public class Result {
     /**
      * 错误码
      */
@@ -21,5 +21,5 @@ public class Result<T> {
     /**
      * 具体的内容
      */
-    private T data;
+    private Object data;
 }

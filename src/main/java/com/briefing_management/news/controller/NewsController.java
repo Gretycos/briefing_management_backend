@@ -48,4 +48,67 @@ public class NewsController {
         }
         return result;
     }
+
+    @RequestMapping(value = "/get/time",method = RequestMethod.POST)
+    public Object getSpiderTime(){
+        Result result = new Result();
+        try{
+            result.setCode(ResultCode.SUCCESS);
+            result.setMsg("查询成功");
+            result.setData(newsService.getSpiderTime());
+        }catch (Exception e){
+            result.setCode(ResultCode.ERROR);
+            result.setMsg("服务器错误");
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/update/time",method = RequestMethod.POST)
+    public Object updateSpiderTime(@RequestParam Map<String,String> time){
+        Result result = new Result();
+        try{
+            newsService.updateSpiderTime(time.get("minute"),time.get("hour"));
+            result.setCode(ResultCode.SUCCESS);
+            result.setMsg("修改成功");
+            result.setData(1);
+        }catch (Exception e){
+            result.setCode(ResultCode.ERROR);
+            result.setMsg("服务器错误");
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/get/news/state",method = RequestMethod.POST)
+    public Object getNewsState(){
+        Result result = new Result();
+        try{
+            result.setData(newsService.getNewsState());
+            result.setCode(ResultCode.SUCCESS);
+            result.setMsg("查询成功");
+        }catch (Exception e){
+            result.setCode(ResultCode.ERROR);
+            result.setMsg("服务器错误");
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/generate/news",method = RequestMethod.POST)
+    public Object generateNews(){
+        Result result = new Result();
+        try{
+            int state = newsService.generateNews();
+            if (state == 1) {
+                result.setCode(ResultCode.SUCCESS);
+                result.setMsg("爬取成功");
+            } else {
+                result.setCode(ResultCode.ERROR);
+                result.setMsg("爬取异常");
+            }
+            result.setData(state);
+        }catch (Exception e){
+            result.setCode(ResultCode.ERROR);
+            result.setMsg("服务器错误");
+        }
+        return result;
+    }
 }

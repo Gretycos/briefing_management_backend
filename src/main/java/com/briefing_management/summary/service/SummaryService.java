@@ -6,5 +6,14 @@ import java.util.List;
 
 public interface SummaryService {
     List<Summary> getSummaryByPage(int pageOffset,int pageSize,int order);
+
     int getSummaryNum();
+
+    boolean getTopicState();
+
+    int generateTopic();
+
+    boolean getSummaryState();
+
+    int generateSummary();
 }
