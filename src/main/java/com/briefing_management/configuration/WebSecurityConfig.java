@@ -75,10 +75,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login","/mylogin","/user/add","/news/**","/summary/**","/gather/**").permitAll()//定义不需要认证就可以访问
+                .antMatchers("/login","/mylogin","/user/add").permitAll()//定义不需要认证就可以访问
                 //定义需要相应角色就可以访问，角色信息可以自定义，在sys_role表中存储
                 //和在接口中使用注解同样效果hasAuthority 等同于hasRole,校验时角色将被增加 "ROLE_"
-                .antMatchers( "/user/**").hasRole("admin")
+                .antMatchers( "/user/**","/news/**","/summary/**","/gather/**").hasRole("admin")
                 .anyRequest().authenticated()//其余所有请求都需要登录认证才能访问
                 .and()
                 //表单登录
