@@ -99,7 +99,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //登出
                 .logout()
                 .logoutUrl("/logout")//自定义退出url
-                .logoutSuccessUrl("/login/mylogin")//登出成功时访问
+//                .logoutSuccessUrl("/login/mylogin")//登出成功时访问
                 .logoutSuccessHandler(myLogoutSuccessHandle)//设置了登入登出的Handler,优先响应Handler
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
