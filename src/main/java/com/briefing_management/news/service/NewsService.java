@@ -12,7 +12,7 @@ public interface NewsService {
 
     Map<String,String> getSpiderTime();
 
-    void updateSpiderTime(String minute, String hour);
+    boolean updateSpiderTime(String minute, String hour);
 
     boolean getNewsState();
 

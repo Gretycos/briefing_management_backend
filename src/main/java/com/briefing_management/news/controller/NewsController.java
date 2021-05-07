@@ -67,10 +67,16 @@ public class NewsController {
     public Object updateSpiderTime(@RequestParam Map<String,String> time){
         Result result = new Result();
         try{
-            newsService.updateSpiderTime(time.get("minute"),time.get("hour"));
-            result.setCode(ResultCode.SUCCESS);
-            result.setMsg("修改成功");
-            result.setData(1);
+            boolean state = newsService.updateSpiderTime(time.get("minute"),time.get("hour"));
+            if (state){
+                result.setCode(ResultCode.SUCCESS);
+                result.setMsg("修改成功");
+                result.setData(1);
+            } else {
+                result.setCode(ResultCode.ERROR);
+                result.setMsg("服务器异常");
+                result.setData(0);
+            }
         }catch (Exception e){
             result.setCode(ResultCode.ERROR);
             result.setMsg("服务器错误");

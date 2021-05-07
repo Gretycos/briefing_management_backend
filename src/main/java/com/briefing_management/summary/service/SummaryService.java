@@ -13,7 +13,11 @@ public interface SummaryService {
 
     int generateTopic();
 
+    boolean updateTopicDiscoveryTime(String minute, String hour);
+
     boolean getSummaryState();
 
     int generateSummary();
+
+    boolean updateSummaryGenerationTime(String minute, String hour);
 }

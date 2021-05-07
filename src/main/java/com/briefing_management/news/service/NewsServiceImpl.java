@@ -2,6 +2,7 @@ package com.briefing_management.news.service;
 
 import com.briefing_management.news.dao.NewsMapper;
 import com.briefing_management.news.model.News;
+import com.briefing_management.summary.service.SummaryService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -18,6 +19,8 @@ import java.util.Map;
 public class NewsServiceImpl implements NewsService{
     @Resource
     NewsMapper newsMapper;
+    @Resource
+    SummaryService summaryService;
 
     @Override
     public List<News> getNewsByPage(int pageOffset, int pageSize, int order) {
@@ -31,14 +34,16 @@ public class NewsServiceImpl implements NewsService{
 
     @Override
     public Map<String, String> getSpiderTime() {
-        String command = "sed -n '/newsdata/p' test.txt";
+        String command = "sed -n '/newsdata/p' root";
         String[] commands = {"/bin/sh","-c",command};
         Process process = null;
         Map<String, String> time = new HashMap<>();
         try {
             process = Runtime.getRuntime().exec(commands, null,
                     // 文件所在的路径
-                    new File("/Users/huangyaocong/Desktop/"));
+//                    new File("/Users/huangyaocong/Desktop/")
+                    new File("/var/spool/cron/crontabs/")
+            );
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(
                             // getInputStream()获取命令的输出
@@ -68,8 +73,11 @@ public class NewsServiceImpl implements NewsService{
     }
 
     @Override
-    public void updateSpiderTime(String minute, String hour) {
-        String command = "sed -i '' 's/^.*newsdata.*$/" + minute + " " + hour +
+    public boolean updateSpiderTime(String minute, String hour) {
+        // mac
+//        String command = "sed -i '' 's/^.*newsdata.*$/" + minute + " " + hour +
+//                " * * * cd \\/home\\/huangyaocong\\/PythonProjects\\/newsdata\\/newsdata \\&\\& nohup python3 main.py 1\\>spider.log 2\\>\\&1 \\&/' root";
+        String command = "sed -i 's/^.*newsdata.*$/" + minute + " " + hour +
                 " * * * cd \\/home\\/huangyaocong\\/PythonProjects\\/newsdata\\/newsdata \\&\\& nohup python3 main.py 1\\>spider.log 2\\>\\&1 \\&/' root";
         String[] commands = {"/bin/sh","-c",command};
         Process process = null;
@@ -95,10 +103,14 @@ public class NewsServiceImpl implements NewsService{
             int exitValue = process.waitFor();
 
             if(exitValue != 0) {
-                System.out.println("error");
+                System.out.println("updateSpiderTime, error");
+                return false;
             }
+            return summaryService.updateTopicDiscoveryTime(Integer.parseInt(minute)+5+"", hour)
+                    && summaryService.updateSummaryGenerationTime(Integer.parseInt(minute)+15+"", hour);
         } catch(Exception e) {
             e.printStackTrace();
+            return false;
         }
     }
 
@@ -110,7 +122,7 @@ public class NewsServiceImpl implements NewsService{
 
     @Override
     public int generateNews() {
-        String command = "python main.py 1>spider.log 2>&1";
+        String command = "python3 main.py 1>spider.log 2>&1";
         String[] commands = {"/bin/sh","-c",command};
         Process process = null;
 
