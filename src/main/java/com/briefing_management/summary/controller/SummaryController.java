@@ -122,4 +122,24 @@ public class SummaryController {
         }
         return result;
     }
+
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    public Object updateSummary(@RequestParam Map<String,String> new_summary){
+        Result result = new Result();
+        try{
+            int state = summaryService.updateSummary(new_summary.get("article_id"),new_summary.get("summary"));
+            if (state == 1){
+                result.setCode(ResultCode.SUCCESS);
+                result.setMsg("更新成功");
+            } else {
+                result.setCode(ResultCode.ERROR);
+                result.setMsg("更新错误");
+            }
+            result.setData(state);
+        }catch (Exception e){
+            result.setCode(ResultCode.ERROR);
+            result.setMsg("服务器错误");
+        }
+        return result;
+    }
 }

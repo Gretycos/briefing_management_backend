@@ -20,4 +20,6 @@ public interface SummaryService {
     int generateSummary();
 
     boolean updateSummaryGenerationTime(String minute, String hour);
+
+    int updateSummary(String articleId, String newContent);
 }

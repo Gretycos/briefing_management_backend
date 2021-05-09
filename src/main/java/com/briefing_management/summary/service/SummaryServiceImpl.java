@@ -198,4 +198,9 @@ public class SummaryServiceImpl implements SummaryService{
             return false;
         }
     }
+
+    @Override
+    public int updateSummary(String articleId, String newContent) {
+        return summaryMapper.updateSummary(articleId,newContent);
+    }
 }

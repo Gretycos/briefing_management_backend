@@ -109,7 +109,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .rememberMeParameter("rememberMe")
                 .rememberMeCookieName("remember-me")
                 .tokenRepository(persistentTokenRepository()) // 写入token
-                .tokenValiditySeconds(60 * 10)
+                .tokenValiditySeconds(60 * 60 * 24 * 7)
                 .userDetailsService(myUserDetailsService)
                 .and()
                 //session设置
@@ -149,7 +149,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedHeader("*");
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:8091"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:8091","http://39.105.43.226:8091"));
         configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "OPTIONS", "DELETE"));
         configuration.setAllowCredentials(true);//允许携带cookie
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

@@ -3,6 +3,7 @@ package com.briefing_management.summary.dao;
 import com.briefing_management.summary.model.Summary;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -26,4 +27,9 @@ public interface SummaryMapper {
             "from news_summary " +
             "where publish_time > #{today}")
     int getSummaryState(@Param("today") String today);
+
+    @Update("update news_summary " +
+            "set summary = #{newContent} " +
+            "where article_id = #{articleId}")
+    int updateSummary(@Param("articleId") String articleId,@Param("newContent") String newContent);
 }
