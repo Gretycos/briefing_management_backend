@@ -81,7 +81,11 @@ public class SummaryServiceImpl implements SummaryService{
     @Override
     public boolean updateTopicDiscoveryTime(String minute, String hour) {
         String command = "sed -i 's/^.*TopicDiscovery.*$/" + minute + " " + hour +
-                " * * * cd \\/home\\/huangyaocong\\/PythonProjects\\/TopicDiscovery \\&\\& nohup sh run.sh \\-o \\-d 1 1\\>topic.log 2\\>\\&1 \\&/' root";
+                " * * * cd \\/home\\/huangyaocong\\/PythonProjects\\/TopicDiscovery \\&\\& nohup sh run.sh \\-o \\-d 0 1\\>topic.log 2\\>\\&1 \\&/' root";
+        if (Integer.parseInt(hour)>=0 && Integer.parseInt(hour)<=8){
+            command = "sed -i 's/^.*TopicDiscovery.*$/" + minute + " " + hour +
+                    " * * * cd \\/home\\/huangyaocong\\/PythonProjects\\/TopicDiscovery \\&\\& nohup sh run.sh \\-o \\-d 1 1\\>topic.log 2\\>\\&1 \\&/' root";
+        }
         String[] commands = {"/bin/sh","-c",command};
         Process process = null;
 
@@ -164,7 +168,11 @@ public class SummaryServiceImpl implements SummaryService{
     @Override
     public boolean updateSummaryGenerationTime(String minute, String hour) {
         String command = "sed -i 's/^.*SingleDocSum.*$/" + minute + " " + hour +
-                " * * * cd \\/home\\/huangyaocong\\/PythonProjects\\/SingleDocSum \\&\\& nohup sh run.sh \\-g \\-d 1 1\\>generate.log 2\\>\\&1 \\&/' root";
+                " * * * cd \\/home\\/huangyaocong\\/PythonProjects\\/SingleDocSum \\&\\& nohup sh run.sh \\-g \\-d 0 1\\>generate.log 2\\>\\&1 \\&/' root";
+        if (Integer.parseInt(hour)>=0 && Integer.parseInt(hour)<=8){
+            command = "sed -i 's/^.*SingleDocSum.*$/" + minute + " " + hour +
+                    " * * * cd \\/home\\/huangyaocong\\/PythonProjects\\/SingleDocSum \\&\\& nohup sh run.sh \\-g \\-d 1 1\\>generate.log 2\\>\\&1 \\&/' root";
+        }
         String[] commands = {"/bin/sh","-c",command};
         Process process = null;
 

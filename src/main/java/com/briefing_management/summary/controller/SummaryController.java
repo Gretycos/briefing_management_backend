@@ -127,7 +127,7 @@ public class SummaryController {
     public Object updateSummary(@RequestParam Map<String,String> new_summary){
         Result result = new Result();
         try{
-            int state = summaryService.updateSummary(new_summary.get("article_id"),new_summary.get("summary"));
+            int state = summaryService.updateSummary(new_summary.get("articleId"),new_summary.get("summary"));
             if (state == 1){
                 result.setCode(ResultCode.SUCCESS);
                 result.setMsg("更新成功");
