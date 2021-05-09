@@ -1,5 +1,6 @@
 package com.briefing_management.news.service;
 
+import com.alibaba.fastjson.JSON;
 import com.briefing_management.news.dao.NewsMapper;
 import com.briefing_management.news.model.News;
 import com.briefing_management.summary.service.SummaryService;
@@ -24,7 +25,16 @@ public class NewsServiceImpl implements NewsService{
 
     @Override
     public List<News> getNewsByPage(int pageOffset, int pageSize, int order) {
-        return newsMapper.getNewsByPage(pageOffset,pageSize,order);
+        List<News> newsList = newsMapper.getNewsByPage(pageOffset,pageSize,order);
+        for (News news: newsList){
+            List<String> imageList = (List<String>) JSON.parse(news.getImages());
+            if (!imageList.isEmpty()){
+                imageList.replaceAll(url ->
+                        "/"+url.split("/")[6]+"/"+url.split("/")[7]+"/"+url.split("/")[8]);
+                news.setImages(JSON.toJSONString(imageList));
+            }
+        }
+        return newsList;
     }
 
     @Override
