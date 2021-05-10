@@ -41,7 +41,7 @@ public class SummaryServiceImpl implements SummaryService{
 
     @Override
     public int generateTopic() {
-        if (newsService.getNewsState()){
+        if (newsService.getNewsStateMore()){
             String command = "sh run.sh -o -d 0 1>topic.log 2>&1";
             String[] commands = {"/bin/sh","-c",command};
             Process process = null;

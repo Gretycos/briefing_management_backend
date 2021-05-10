@@ -16,5 +16,7 @@ public interface NewsService {
 
     boolean getNewsState();
 
+    boolean getNewsStateMore();
+
     int generateNews();
 }

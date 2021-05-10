@@ -73,7 +73,7 @@ public class SummaryController {
                 result.setMsg("生成成功");
             } else if (state == 2){
                 result.setCode(ResultCode.ERROR);
-                result.setMsg("生成主题前应先爬取数据");
+                result.setMsg("今日数据不足，应大于20条");
             } else {
                 result.setCode(ResultCode.ERROR);
                 result.setMsg("生成错误");

@@ -131,6 +131,12 @@ public class NewsServiceImpl implements NewsService{
     }
 
     @Override
+    public boolean getNewsStateMore() {
+        String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        return newsMapper.getNewsState(today) > 20;
+    }
+
+    @Override
     public int generateNews() {
         String command = "python3 main.py 1>spider.log 2>&1";
         String[] commands = {"/bin/sh","-c",command};
